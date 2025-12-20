@@ -1,0 +1,4 @@
+models:
+  mistral_chat_model : "mistral-large-2512"
+  mistral_embed_model : "mistral-embed"
+  mistral_vision_model : "mistral-small-latest"

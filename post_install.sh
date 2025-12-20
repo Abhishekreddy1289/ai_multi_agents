@@ -1,0 +1,1 @@
+pip uninstall -y pinecone-plugin-inference
