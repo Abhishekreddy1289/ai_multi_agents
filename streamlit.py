@@ -43,6 +43,8 @@ st.set_page_config(page_title="🤖 Advanced Multimodal Chatbot", layout="wide")
 st.title("🤖 Advanced Multimodal Chatbot")
 st.markdown("You can send **text, PDF, image, or audio** files and get responses with markdown formatting.")
 logger.info("Streamlit Running...")
+
+
 # Initialize agent
 agent = CreateAgent()
 os.environ["LANGSMITH_TRACING"] = "true"
