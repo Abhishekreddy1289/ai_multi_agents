@@ -26,8 +26,8 @@ class CreateAgent:
         )
         self.agent = create_agent(model=self.model, tools=self.tools)
 
-    def query_inference(self, query, image_path=None, audio_path=None, pdf_path=None, filename=None):
-        system_prompt = get_prompt("default")  # or "friendly" / "expert"
+    def query_inference(self, query,system_prompt_type, image_path=None, audio_path=None, pdf_path=None, filename=None):
+        system_prompt = get_prompt(system_prompt_type.lower())  # or "friendly" / "expert"
 
         messages = [SystemMessage(content=system_prompt)]
 

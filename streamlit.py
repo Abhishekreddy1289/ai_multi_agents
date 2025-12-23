@@ -49,6 +49,21 @@ logger.info("Streamlit Running...")
 agent = CreateAgent()
 os.environ["LANGSMITH_TRACING"] = "true"
 
+st.sidebar.header("Assistant Settings")
+
+selected_prompt_type = st.sidebar.radio(
+    "Select Assistant Style",
+    options=["Default", "Friendly", "Technical"],
+    index=0  # Default selected
+)
+
+if "system_prompt_type" not in st.session_state:
+    st.session_state.system_prompt_type = "Default"
+
+# Update system prompt when user changes selection
+st.session_state.system_prompt_type = selected_prompt_type
+
+
 # --------------------------
 # Session states
 # --------------------------
@@ -101,7 +116,7 @@ def process_input(prompt, uploaded_file=None):
 
         logger.info(f" Temp File Path: {file_args}")
         # Single inference call handling all types
-        response = agent.query_inference(prompt, **file_args)
+        response = agent.query_inference(prompt,system_prompt_type=st.session_state.system_prompt_type, **file_args)
         logger.success("Inference Completed")
         with st.chat_message("assistant"):
             st.markdown(response)
@@ -111,6 +126,8 @@ def process_input(prompt, uploaded_file=None):
             temp_path.unlink()
     
     st.session_state.chat_history.append({"role": "assistant", "content": response})
+
+
 
 # --------------------------
 # Sidebar: File upload
