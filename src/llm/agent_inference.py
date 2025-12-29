@@ -1,6 +1,6 @@
 import sys
 from pathlib import Path
-
+import  streamlit as st
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.append(str(PROJECT_ROOT))
 
@@ -26,9 +26,9 @@ class CreateAgent:
         )
         self.agent = create_agent(model=self.model, tools=self.tools)
 
-    def query_inference(self, query,system_prompt_type, image_path=None, audio_path=None, pdf_path=None, filename=None):
+    def query_inference(self, query,system_prompt_type, image_path=None, audio_path=None, pdf_path=None, csv_path=None, xlsx_path=None, table_name=None,  filename=None):
         system_prompt = get_prompt(system_prompt_type.lower())  # or "friendly" / "expert"
-
+        st.toast("Inference Started!",icon="🎉")
         messages = [SystemMessage(content=system_prompt)]
 
         if image_path:
@@ -39,6 +39,14 @@ class CreateAgent:
             file_info = f"PDF Path: {pdf_path}"
             if filename:
                 file_info += f" and filename: {filename}"
+            messages.append(HumanMessage(content=file_info))
+        if csv_path:
+            file_info = f"CSV Path: {csv_path} and Table Name: {table_name}"
+            print(file_info)
+            messages.append(HumanMessage(content=file_info))
+        if xlsx_path:
+            file_info = f"Excel Path: {xlsx_path} and Table Name: {table_name}"
+            print(file_info)
             messages.append(HumanMessage(content=file_info))
 
         messages.append(HumanMessage(content=query))
